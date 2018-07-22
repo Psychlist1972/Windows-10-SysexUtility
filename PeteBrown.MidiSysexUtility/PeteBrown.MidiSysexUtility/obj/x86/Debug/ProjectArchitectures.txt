@@ -1,0 +1,1 @@
+D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility.csproj;x86
