@@ -31,13 +31,13 @@
     <AppXManifest Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2018-07-22T08:07:55.641</Modified>
+      <Modified>2018-07-22T21:06:52.770</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\bin\x86\Debug\PeteBrown.MidiSysexUtility.exe">
       <PackagePath>entrypoint\PeteBrown.MidiSysexUtility.exe</PackagePath>
-      <Modified>2018-07-22T08:07:55.186</Modified>
+      <Modified>2018-07-22T21:06:52.399</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\peteb\.nuget\packages\petebrown.devices.midi\0.90.8-beta\runtimes\win10-x86\native\PeteBrown.Devices.Midi.dll">
       <PackagePath>PeteBrown.Devices.Midi.dll</PackagePath>
@@ -747,11 +747,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\bin\x86\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2018-07-22T08:07:55.056</Modified>
+      <Modified>2018-07-22T21:06:52.269</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\bin\x86\Debug\MainPage.xbf">
       <PackagePath>MainPage.xbf</PackagePath>
-      <Modified>2018-07-22T08:07:55.056</Modified>
+      <Modified>2018-07-22T21:06:52.269</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.17134.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -760,11 +760,11 @@
     <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2018-07-22T07:55:44.913</Modified>
+      <Modified>2018-07-22T20:59:22.645</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\bin\x86\Debug\Core\PeteBrown.MidiSysexUtility.exe">
       <PackagePath>PeteBrown.MidiSysexUtility.exe</PackagePath>
-      <Modified>2018-07-22T08:07:55.637</Modified>
+      <Modified>2018-07-22T21:06:52.767</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

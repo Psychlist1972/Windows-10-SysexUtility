@@ -526,35 +526,191 @@
     <AppxPackagedFile Include="C:\Users\peteb\.nuget\packages\petebrown.devices.midi\0.90.8-beta\lib\uap10.0\PeteBrown.Devices.Midi.winmd">
       <PackagePath>PeteBrown.Devices.Midi.winmd</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Properties\Default.rd.xml">
-      <PackagePath>Properties\Default.rd.xml</PackagePath>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\App logo.png">
+      <PackagePath>Assets\App logo.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\LockScreenLogo.scale-200.png">
-      <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\LargeTile.scale-100.png">
+      <PackagePath>Assets\LargeTile.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\LargeTile.scale-125.png">
+      <PackagePath>Assets\LargeTile.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\LargeTile.scale-150.png">
+      <PackagePath>Assets\LargeTile.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\LargeTile.scale-200.png">
+      <PackagePath>Assets\LargeTile.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\LargeTile.scale-400.png">
+      <PackagePath>Assets\LargeTile.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\SmallTile.scale-100.png">
+      <PackagePath>Assets\SmallTile.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\SmallTile.scale-125.png">
+      <PackagePath>Assets\SmallTile.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\SmallTile.scale-150.png">
+      <PackagePath>Assets\SmallTile.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\SmallTile.scale-200.png">
+      <PackagePath>Assets\SmallTile.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\SmallTile.scale-400.png">
+      <PackagePath>Assets\SmallTile.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\SplashScreen.scale-100.png">
+      <PackagePath>Assets\SplashScreen.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\SplashScreen.scale-125.png">
+      <PackagePath>Assets\SplashScreen.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\SplashScreen.scale-150.png">
+      <PackagePath>Assets\SplashScreen.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\SplashScreen.scale-400.png">
+      <PackagePath>Assets\SplashScreen.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square150x150Logo.scale-100.png">
+      <PackagePath>Assets\Square150x150Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square150x150Logo.scale-125.png">
+      <PackagePath>Assets\Square150x150Logo.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square150x150Logo.scale-150.png">
+      <PackagePath>Assets\Square150x150Logo.scale-150.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square150x150Logo.scale-200.png">
       <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square150x150Logo.scale-400.png">
+      <PackagePath>Assets\Square150x150Logo.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square44x44Logo.altform-unplated_targetsize-16.png">
+      <PackagePath>Assets\Square44x44Logo.altform-unplated_targetsize-16.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square44x44Logo.altform-unplated_targetsize-24.png">
+      <PackagePath>Assets\Square44x44Logo.altform-unplated_targetsize-24.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square44x44Logo.altform-unplated_targetsize-256.png">
+      <PackagePath>Assets\Square44x44Logo.altform-unplated_targetsize-256.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square44x44Logo.altform-unplated_targetsize-32.png">
+      <PackagePath>Assets\Square44x44Logo.altform-unplated_targetsize-32.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square44x44Logo.altform-unplated_targetsize-48.png">
+      <PackagePath>Assets\Square44x44Logo.altform-unplated_targetsize-48.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square44x44Logo.scale-100.png">
+      <PackagePath>Assets\Square44x44Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square44x44Logo.scale-125.png">
+      <PackagePath>Assets\Square44x44Logo.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square44x44Logo.scale-150.png">
+      <PackagePath>Assets\Square44x44Logo.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square44x44Logo.scale-200.png">
       <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
-      <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square44x44Logo.scale-400.png">
+      <PackagePath>Assets\Square44x44Logo.scale-400.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\StoreLogo.png">
-      <PackagePath>Assets\StoreLogo.png</PackagePath>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square44x44Logo.targetsize-16.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-16.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square44x44Logo.targetsize-24.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-24.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square44x44Logo.targetsize-256.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-256.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square44x44Logo.targetsize-32.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-32.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Square44x44Logo.targetsize-48.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-48.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\StoreLogo.scale-100.png">
+      <PackagePath>Assets\StoreLogo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\StoreLogo.scale-125.png">
+      <PackagePath>Assets\StoreLogo.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\StoreLogo.scale-150.png">
+      <PackagePath>Assets\StoreLogo.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\StoreLogo.scale-200.png">
+      <PackagePath>Assets\StoreLogo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\StoreLogo.scale-400.png">
+      <PackagePath>Assets\StoreLogo.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Wide310x150Logo.scale-100.png">
+      <PackagePath>Assets\Wide310x150Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Wide310x150Logo.scale-125.png">
+      <PackagePath>Assets\Wide310x150Logo.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Wide310x150Logo.scale-150.png">
+      <PackagePath>Assets\Wide310x150Logo.scale-150.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Assets\Wide310x150Logo.scale-400.png">
+      <PackagePath>Assets\Wide310x150Logo.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\Properties\Default.rd.xml">
+      <PackagePath>Properties\Default.rd.xml</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\bin\x86\Debug\PeteBrown.MidiSysexUtility.xr.xml">
       <PackagePath>PeteBrown.MidiSysexUtility.xr.xml</PackagePath>

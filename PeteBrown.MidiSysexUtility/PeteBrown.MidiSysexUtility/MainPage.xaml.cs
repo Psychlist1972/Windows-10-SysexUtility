@@ -55,8 +55,8 @@ namespace PeteBrown.MidiSysexUtility
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            EnteredBufferSize.Text = MidiSysExSender.DefaultBufferSize.ToString();
-            EnteredSendDelay.Text = MidiSysExSender.DefaultDelayBetweenBuffers.ToString();
+            EnteredBufferSize.Text = Settings.TransferBufferSize.ToString();
+            EnteredTransferDelay.Text = Settings.TransferDelayBetweenBuffers.ToString();
 
 
             _watcher.OutputPortsEnumerated += _watcher_OutputPortsEnumerated;
@@ -97,8 +97,10 @@ namespace PeteBrown.MidiSysexUtility
 
             var picker = new FileOpenPicker();
 
+            // I miss being able to add a description here, like "MIDI SysEx Files|*.syx;*.mid"
             picker.FileTypeFilter.Add(".syx");
             picker.FileTypeFilter.Add(".mid");
+            picker.FileTypeFilter.Add("*");
 
             var file = await picker.PickSingleFileAsync();
 
@@ -108,8 +110,6 @@ namespace PeteBrown.MidiSysexUtility
                 _inputFile = file;
 
                 SendSysExFile.IsEnabled = true;
-
-
                 
                 var basicProperties = await file.GetBasicPropertiesAsync();
 
@@ -142,12 +142,12 @@ namespace PeteBrown.MidiSysexUtility
         {
             // validate the two user-entered parameters
 
-            int sendDelay = 0;
-            int bufferSize = 0;
+            uint transferDelayBetweenBuffers = 0;
+            uint transferBufferSize = 0;
 
-            if ((int.TryParse(EnteredSendDelay.Text, out sendDelay)) && sendDelay >= 0)
+            if ((uint.TryParse(EnteredTransferDelay.Text, out transferDelayBetweenBuffers)) && transferDelayBetweenBuffers >= 0)
             {
-                if ((int.TryParse(EnteredBufferSize.Text, out bufferSize)) && bufferSize > 0)
+                if ((uint.TryParse(EnteredBufferSize.Text, out transferBufferSize)) && transferBufferSize > 0)
                 {
                     // all good
                 }
@@ -165,6 +165,7 @@ namespace PeteBrown.MidiSysexUtility
                 return;
             }
 
+            // validate, open the port, and then send the file
             if (_inputFile != null)
             {
                 if (_outputPortDeviceInformation != null)
@@ -180,11 +181,12 @@ namespace PeteBrown.MidiSysexUtility
                         if (stream != null && stream.CanRead)
                         {
                             // send the bytes
-                            _transferOperation = MidiSysExSender.SendSysExStreamAsyncWithProgress(stream, outputPort, (uint)bufferSize, (uint)sendDelay);
+                            _transferOperation = MidiSysExSender.SendSysExStreamAsyncWithProgress(stream, outputPort, transferBufferSize, transferDelayBetweenBuffers);
 
+                            // show progress of the operation. This is updated async
                             ProgressPanel.Visibility = Visibility.Visible;
-
                             Cancel.IsEnabled = true;
+
 
                             //report progress 
                             _transferOperation.Progress = (result, progress) => 
@@ -194,25 +196,20 @@ namespace PeteBrown.MidiSysexUtility
                                 PercentComplete.Text = Math.Round(((double)progress / _fileSizeInBytes) * 100, 0) + "%";
                             };
 
+                            // handle completion
                             _transferOperation.Completed = async (result, progress) =>
                             {
-                                // disable other UI
+                                // no need for cancel anymore
+                                Cancel.IsEnabled = false;
 
-
-                                // close the stream
+                                // nuke the stream
                                 stream.Dispose();
-
+                                stream = null;
 
                                 // close the MIDI port
                                 outputPort = null;
 
-                                // re-enable other UI
-
-
-                                // show completion message
-
-                                Cancel.IsEnabled = false;
-
+                                // show completion message, depending on what type of completion we have
                                 if (result.Status == AsyncStatus.Canceled)
                                 {
                                     var dlg = new MessageDialog("Transfer canceled.");
@@ -220,11 +217,15 @@ namespace PeteBrown.MidiSysexUtility
                                 }
                                 else if (result.Status == AsyncStatus.Error)
                                 {
-                                    var dlg = new MessageDialog("Transfer error.");
+                                    var dlg = new MessageDialog("Transfer error. You may need to close and re-open this app, and also reboot your device.");
                                     await dlg.ShowAsync();
                                 }
                                 else
                                 {
+                                    // save the user-entered settings, since they worked
+                                    Settings.TransferBufferSize = transferBufferSize;
+                                    Settings.TransferDelayBetweenBuffers = transferDelayBetweenBuffers;
+
                                     var dlg = new MessageDialog("Transfer complete.");
                                     await dlg.ShowAsync();
                                 }
@@ -234,24 +235,28 @@ namespace PeteBrown.MidiSysexUtility
                         }
                         else
                         {
+                            // stream is null or CanRead is false
                             var dlg = new MessageDialog("Could not open file '" + _inputFile.Name + "' for reading.");
                             await dlg.ShowAsync();
                         }
                     }
                     else
                     {
+                        // outputPort is null
                         var dlg = new MessageDialog("Could not open MIDI output port '" + _outputPortDeviceInformation.Name + "'");
                         await dlg.ShowAsync();
                     }
                 }
                 else
                 {
+                    // _outputPortDeviceInformation is null
                     var dlg = new MessageDialog("No MIDI output port selected'");
                     await dlg.ShowAsync();
                 }
             }
             else
             {
+                // _inputFile is null
                 var dlg = new MessageDialog("No SysEx input file selected'");
                 await dlg.ShowAsync();
             }
@@ -265,15 +270,13 @@ namespace PeteBrown.MidiSysexUtility
             _transferOperation.Cancel();
 
             Cancel.IsEnabled = false;
-
         }
 
 
 
         private void MidiOutputPortList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // enable the file button
-
+            // enable the file button if the user has selected a port
             if (e.AddedItems.Count > 0 && MidiOutputPortList.SelectedItem != null)
             {
                 PickInputFile.IsEnabled = true;

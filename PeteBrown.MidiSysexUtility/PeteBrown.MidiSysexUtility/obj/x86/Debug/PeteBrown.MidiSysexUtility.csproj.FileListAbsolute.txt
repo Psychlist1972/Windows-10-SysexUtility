@@ -289,4 +289,3 @@ D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\Pet
 D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\obj\x86\Debug\MultipleQualifiersPerDimensionFound.txt
 D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\obj\x86\Debug\PeteBrown.Devices.Midi.pri.xml
 D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\obj\x86\Debug\ProjectArchitectures.txt
-D:\peteb\Documents\GitHub\Windows-10-SysexUtility\PeteBrown.MidiSysexUtility\PeteBrown.MidiSysexUtility\obj\x86\Debug\PeteBrown.MidiSysexUtility.csprojAssemblyReference.cache

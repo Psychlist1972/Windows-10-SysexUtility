@@ -23,7 +23,7 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <TextBlock Text="Pick the MIDI interface to send to, and then the file to send. Hit 'Send SysEx' when ready. The buffer size and send delay help control transfer speed for slower or older devices which run into buffer overruns or other problems at full speed. A buffer size of 128 and delay of 0 works well for fast USB-connected devices like Elektron gear." 
+                <TextBlock Text="Pick the MIDI interface to send to, and then the file to send. Hit 'Send SysEx' when ready. The buffer size and transfer delay help control transfer speed for slower or older devices which run into buffer overruns or other problems at full speed. A buffer size of 128 and delay of 0 works well for fast USB-connected devices like Elektron gear." 
                            TextWrapping="WrapWholeWords"
                            Margin="4,4,4,40" />
             </Grid>
@@ -59,8 +59,8 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <TextBox x:Name="EnteredBufferSize" Header="Send Buffer Size (bytes)" Width="200" Grid.Row="0" HorizontalAlignment="Left" Margin="4" />
-                <TextBox x:Name="EnteredSendDelay" Header="Send Delay (milliseconds)" Width="200" Grid.Row="1" HorizontalAlignment="Left" Margin="4" />
+                <TextBox x:Name="EnteredBufferSize" Header="Transfer Buffer Size (bytes)" Width="220" Grid.Row="0" HorizontalAlignment="Left" Margin="4" />
+                <TextBox x:Name="EnteredTransferDelay" Header="Transfer Delay (milliseconds)" Width="220" Grid.Row="1" HorizontalAlignment="Left" Margin="4" />
             </Grid>
 
             <Grid Grid.Row="4" Margin="0,20,0,20">

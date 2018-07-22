@@ -33,27 +33,22 @@ namespace PeteBrown.MidiSysexUtility
 
                         while (dataReader.UnconsumedBufferLength > 0)
                         {
-                            // if the user has canceled, make sure we stop
-                            if (token.IsCancellationRequested)
+                            // if the user canceled, throw, so we get ejected from this
+                            token.ThrowIfCancellationRequested();
+
+                            // otherwise continue
+                            var bufferRead = dataReader.ReadBuffer(Math.Min(bufferSize, dataReader.UnconsumedBufferLength));
+
+                            outputPort.SendBuffer(bufferRead);
+
+                            bytesRead += bufferRead.Length;
+
+                            if (sendDelayMilliseconds > 0)
                             {
-                                token.ThrowIfCancellationRequested();
-                                return 0;
+                                await Task.Delay((int)sendDelayMilliseconds);
                             }
-                            else
-                            {
-                                var bufferRead = dataReader.ReadBuffer(Math.Min(bufferSize, dataReader.UnconsumedBufferLength));
 
-                                outputPort.SendBuffer(bufferRead);
-
-                                bytesRead += bufferRead.Length;
-
-                                if (sendDelayMilliseconds > 0)
-                                {
-                                    await Task.Delay((int)sendDelayMilliseconds);
-                                }
-
-                                progress.Report(bytesRead);
-                            }
+                            progress.Report(bytesRead);
                         }
 
 
