@@ -23,7 +23,7 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <TextBlock Text="Pick the MIDI interface to send to, and then the file to send. Hit 'Send SysEx' when ready. The buffer size and transfer delay help control transfer speed for slower or older devices which run into buffer overruns or other problems at full speed. A buffer size of 128 and delay of 0 works well for fast USB-connected devices like Elektron gear." 
+                <TextBlock Text="Pick the MIDI interface to send to, and then the file to send. Hit 'Send SysEx' when ready. The buffer size and transfer delay help control transfer speed for slower or older devices which run into buffer overruns or other problems at full speed. A buffer size of 256 and delay of 0 works well for fast USB-connected devices like Elektron gear. The F0 delay is for devices that need some time to get ready for the SysEx data after being notified that SysEx is coming." 
                            TextWrapping="WrapWholeWords"
                            Margin="4,4,4,40" />
             </Grid>
@@ -52,15 +52,25 @@
             </Grid>
 
 
+            <!-- TODO: add in an optional delay after the first F0 byte -->
+            <!-- wrap these all into two sections: fastest, and configurable -->
+            <!-- consider also displaying the sysex as it is dumped -->
+            <!-- For UI layout options, check the toolkit -->
+            
             <!-- delay between sends -->
             <Grid Grid.Row="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <TextBox x:Name="EnteredBufferSize" Header="Transfer Buffer Size (bytes)" Width="220" Grid.Row="0" HorizontalAlignment="Left" Margin="4" />
-                <TextBox x:Name="EnteredTransferDelay" Header="Transfer Delay (milliseconds)" Width="220" Grid.Row="1" HorizontalAlignment="Left" Margin="4" />
+                <TextBox x:Name="EnteredBufferSize" Header="Transfer Buffer Size (bytes)" Width="240" Grid.Row="0" 
+                         HorizontalAlignment="Left" Margin="4" />
+                <TextBox x:Name="EnteredTransferDelay" Header="Transfer Delay (milliseconds)" Width="240" Grid.Row="1" 
+                         HorizontalAlignment="Left" Margin="4" />
+                <TextBox x:Name="EnteredF0Delay" Header="Delay after initial F0" Width="240" Grid.Row="2" 
+                         HorizontalAlignment="Left" Margin="4" />
             </Grid>
 
             <Grid Grid.Row="4" Margin="0,20,0,20">
@@ -80,10 +90,13 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
+                <TextBlock x:Name="TransferOperationInProgress" Text="" Margin="4" Grid.Row="0" HorizontalAlignment="Center"/>
+
                 <!-- Status progress bar -->
-                <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" Margin="4">
+                <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Margin="4">
                     <TextBlock Text="Transferred" Margin="0,0,5,0"/>
                     <TextBlock x:Name="ProgressBytes" Text="0" />
                     <TextBlock Text="of" Margin="5,0,5,0" />
@@ -91,11 +104,11 @@
                 </StackPanel>
                 
                 
-                <ProgressBar Grid.Row="1" x:Name="SysExSendProgressBar" Value="0" Margin="4" HorizontalAlignment="Center" Width="400"/>
+                <ProgressBar Grid.Row="2" x:Name="SysExSendProgressBar" Value="0" Margin="4" HorizontalAlignment="Center" Width="400"/>
 
-                <TextBlock Grid.Row="2" x:Name="PercentComplete" Text="0%" HorizontalAlignment="Center" FontSize="40" />
+                <TextBlock Grid.Row="3" x:Name="PercentComplete" Text="0%" HorizontalAlignment="Center" FontSize="40" />
 
-                <Button Grid.Row="3" x:Name="Cancel" Content="Cancel" Click="Cancel_Click" IsEnabled="False" Margin="10" HorizontalAlignment="Center" />
+                <Button Grid.Row="4" x:Name="Cancel" Content="Cancel" Click="Cancel_Click" IsEnabled="False" Margin="10" HorizontalAlignment="Center" />
             </Grid>
 
         </Grid>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="2777910rem.net-PeteBrown.MIDISysExTransferUtility" Publisher="CN=7987D675-1F49-4DF0-8769-C5944CAF4EFC" Version="1.1.1.0" />
+  <Identity Name="2777910rem.net-PeteBrown.MIDISysExTransferUtility" Publisher="CN=7987D675-1F49-4DF0-8769-C5944CAF4EFC" Version="1.2.3.0" />
   <mp:PhoneIdentity PhoneProductId="cfc9a9eb-e9bf-4fe5-bb2e-ceba3f6cd474" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>MIDI SysEx Transfer Utility</DisplayName>
@@ -15,14 +15,14 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="PeteBrown.MidiSysexUtility.App">
-      <uap:VisualElements DisplayName="Pete's Simple MIDI SysEx file transfer utility" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Easily transfer binary MIDI SysEx files to connected devices. Great for synthesizer operating system upgrades, patch transfers, and more. Configurable buffer size and delay, but super simple to use. Also supports Windows 10 BLE MIDI." BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="MIDI SysEx file transfer utility" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Easily transfer binary MIDI SysEx files to connected devices. Great for synthesizer operating system upgrades, patch transfers, and more. Configurable buffer size and delay, but super simple to use. Also supports Windows 10 BLE MIDI." BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="SysEx Transfer Utility" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="wide310x150Logo" />
             <uap:ShowOn Tile="square310x310Logo" />
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#f85300" />
       </uap:VisualElements>
     </Application>
   </Applications>
