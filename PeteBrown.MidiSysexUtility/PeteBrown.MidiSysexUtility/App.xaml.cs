@@ -59,6 +59,22 @@ namespace PeteBrown.MidiSysexUtility
                 Window.Current.Content = rootFrame;
             }
 
+
+            // this is used by the app to decide on whether or not to pop toast 
+            Window.Current.Activated += (s, ea) =>
+            {
+                if (ea.WindowActivationState == Windows.UI.Core.CoreWindowActivationState.Deactivated)
+                {
+                    GlobalNonPersistentState.IsCurrentlyActiveApp = false;
+                }
+                else
+                {
+                    GlobalNonPersistentState.IsCurrentlyActiveApp = true;
+                }
+            };
+
+
+
             if (e.PrelaunchActivated == false)
             {
                 if (rootFrame.Content == null)
@@ -71,6 +87,8 @@ namespace PeteBrown.MidiSysexUtility
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+
+
         }
 
         /// <summary>

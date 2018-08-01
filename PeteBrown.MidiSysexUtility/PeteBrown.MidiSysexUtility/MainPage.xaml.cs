@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI.Core;
+using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -34,7 +36,7 @@ namespace PeteBrown.MidiSysexUtility
         private StorageFile _inputFile;
         private DeviceInformation _outputPortDeviceInformation;
 
-        private IAsyncOperationWithProgress<int, uint> _transferOperation;
+        private IAsyncOperationWithProgress<int, MidiSysExSender.MidiSysExStatusReport> _transferOperation;
         ulong _fileSizeInBytes = 0;
 
 
@@ -57,6 +59,7 @@ namespace PeteBrown.MidiSysexUtility
         {
             EnteredBufferSize.Text = Settings.TransferBufferSize.ToString();
             EnteredTransferDelay.Text = Settings.TransferDelayBetweenBuffers.ToString();
+            EnteredF0Delay.Text = Settings.F0Delay.ToString();
 
 
             _watcher.OutputPortsEnumerated += _watcher_OutputPortsEnumerated;
@@ -116,7 +119,7 @@ namespace PeteBrown.MidiSysexUtility
                 // update size info
                 _fileSizeInBytes = basicProperties.Size;
 
-                TotalBytes.Text = _fileSizeInBytes + " bytes";
+                TotalBytes.Text = string.Format("{0:N0} bytes",_fileSizeInBytes);
 
                 SysExSendProgressBar.Minimum = 0;
                 SysExSendProgressBar.Maximum = (double)_fileSizeInBytes;
@@ -126,6 +129,8 @@ namespace PeteBrown.MidiSysexUtility
                 InputFileName.Text = file.Name;
 
                 ProgressPanel.Visibility = Visibility.Collapsed;
+
+                TransferOperationInProgress.Text = "Initializing...";
 
             }
             else
@@ -142,28 +147,31 @@ namespace PeteBrown.MidiSysexUtility
         {
             // validate the two user-entered parameters
 
-            uint transferDelayBetweenBuffers = 0;
             uint transferBufferSize = 0;
-
-            if ((uint.TryParse(EnteredTransferDelay.Text, out transferDelayBetweenBuffers)) && transferDelayBetweenBuffers >= 0)
+            if ((!uint.TryParse(EnteredBufferSize.Text, out transferBufferSize)) || transferBufferSize <= 0)
             {
-                if ((uint.TryParse(EnteredBufferSize.Text, out transferBufferSize)) && transferBufferSize > 0)
-                {
-                    // all good
-                }
-                else
-                {
-                    var dlg = new MessageDialog("For the buffer size, please enter a whole number > 0. This is the size of the message sent over MIDI.");
-                    await dlg.ShowAsync();
-                    return;
-                }
+                var dlg = new MessageDialog("For the buffer size, please enter a whole number > 0. This is the size of the message sent over MIDI.");
+                await dlg.ShowAsync();
+                return;
             }
-            else
+
+            uint transferDelayBetweenBuffers = 0;
+            if ((!uint.TryParse(EnteredTransferDelay.Text, out transferDelayBetweenBuffers)) || transferDelayBetweenBuffers < 0)
             {
                 var dlg = new MessageDialog("For the send delay, please enter a positive whole number. This is the delay between buffers sent over MIDI.");
                 await dlg.ShowAsync();
                 return;
             }
+
+            uint f0Delay = 0;
+            if ((!uint.TryParse(EnteredF0Delay.Text, out f0Delay)) || f0Delay < 0)
+            {
+                var dlg = new MessageDialog("For the F0 delay, please enter a positive whole number. This is the delay after the initial byte is sent to the device, starting the SysEx conversation.");
+                await dlg.ShowAsync();
+                return;
+            }
+
+
 
             // validate, open the port, and then send the file
             if (_inputFile != null)
@@ -191,14 +199,20 @@ namespace PeteBrown.MidiSysexUtility
                             //report progress 
                             _transferOperation.Progress = (result, progress) => 
                             {
-                                SysExSendProgressBar.Value = (double)progress;
-                                ProgressBytes.Text = progress.ToString();
-                                PercentComplete.Text = Math.Round(((double)progress / _fileSizeInBytes) * 100, 0) + "%";
+                                SysExSendProgressBar.Value = (double)progress.BytesRead;
+                                ProgressBytes.Text = string.Format("{0:N0}", progress.BytesRead);
+                                PercentComplete.Text = Math.Round(((double)progress.BytesRead / _fileSizeInBytes) * 100, 0) + "%";
+
+                                TransferOperationInProgress.Text = MidiSysExSender.GetStageDescription(progress.Stage);
                             };
 
                             // handle completion
                             _transferOperation.Completed = async (result, progress) =>
                             {
+                                SysExSendProgressBar.Value = (double)_fileSizeInBytes;
+                                ProgressBytes.Text = string.Format("{0:N0}", _fileSizeInBytes);
+                                PercentComplete.Text = "100%";
+
                                 // no need for cancel anymore
                                 Cancel.IsEnabled = false;
 
@@ -212,12 +226,16 @@ namespace PeteBrown.MidiSysexUtility
                                 // show completion message, depending on what type of completion we have
                                 if (result.Status == AsyncStatus.Canceled)
                                 {
+                                    Statistics.TotalCancelCount += 1;
+
                                     var dlg = new MessageDialog("Transfer canceled.");
                                     await dlg.ShowAsync();
                                 }
                                 else if (result.Status == AsyncStatus.Error)
                                 {
-                                    var dlg = new MessageDialog("Transfer error. You may need to close and re-open this app, and also reboot your device.");
+                                    Statistics.TotalErrorCount += 1;
+
+                                    var dlg = new MessageDialog("Transfer error. You may need to close and re-open this app, and likely also reboot your device.");
                                     await dlg.ShowAsync();
                                 }
                                 else
@@ -225,9 +243,13 @@ namespace PeteBrown.MidiSysexUtility
                                     // save the user-entered settings, since they worked
                                     Settings.TransferBufferSize = transferBufferSize;
                                     Settings.TransferDelayBetweenBuffers = transferDelayBetweenBuffers;
+                                    Settings.F0Delay = f0Delay;
 
-                                    var dlg = new MessageDialog("Transfer complete.");
-                                    await dlg.ShowAsync();
+                                    // update user stats (for local use and display)
+                                    Statistics.TotalFilesTransferred += 1;
+                                    Statistics.TotalBytesTransferred += _fileSizeInBytes;
+
+                                    NotificationManager.NotifySuccess(_fileSizeInBytes, _inputFile.Name);
                                 }
 
                             };
@@ -286,5 +308,11 @@ namespace PeteBrown.MidiSysexUtility
                 ProgressPanel.Visibility = Visibility.Collapsed;
             }
         }
+
+
+
+
+
+
     }
 }
