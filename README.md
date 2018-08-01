@@ -8,5 +8,5 @@ Screen shot of the app transferring an operating system upgrade for the Elektron
 
 ![Screen shot](/images/sysex1-2-light.png)
 
-![Screen shot](/images/sysex1-2-dark.png)
+![Dark Mode Screen shot](/images/sysex1-2-dark.png)
 
