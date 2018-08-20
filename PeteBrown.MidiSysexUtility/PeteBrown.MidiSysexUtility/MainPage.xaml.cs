@@ -145,7 +145,7 @@ namespace PeteBrown.MidiSysexUtility
 
         private async void SendSysExFile_Click(object sender, RoutedEventArgs e)
         {
-            // validate the two user-entered parameters
+            // validate the user-entered parameters
 
             uint transferBufferSize = 0;
             if ((!uint.TryParse(EnteredBufferSize.Text, out transferBufferSize)) || transferBufferSize <= 0)
@@ -209,10 +209,6 @@ namespace PeteBrown.MidiSysexUtility
                             // handle completion
                             _transferOperation.Completed = async (result, progress) =>
                             {
-                                SysExSendProgressBar.Value = (double)_fileSizeInBytes;
-                                ProgressBytes.Text = string.Format("{0:N0}", _fileSizeInBytes);
-                                PercentComplete.Text = "100%";
-
                                 // no need for cancel anymore
                                 Cancel.IsEnabled = false;
 
@@ -226,20 +222,31 @@ namespace PeteBrown.MidiSysexUtility
                                 // show completion message, depending on what type of completion we have
                                 if (result.Status == AsyncStatus.Canceled)
                                 {
+                                    TransferOperationInProgress.Text = "Canceled";
+
                                     Statistics.TotalCancelCount += 1;
+                                    Analytics.LogEvent(AnalyticsEvent.TransferCancel);
 
                                     var dlg = new MessageDialog("Transfer canceled.");
                                     await dlg.ShowAsync();
                                 }
                                 else if (result.Status == AsyncStatus.Error)
                                 {
+                                    TransferOperationInProgress.Text = "Error";
+
                                     Statistics.TotalErrorCount += 1;
+                                    Analytics.LogEvent(AnalyticsEvent.TransferError);
 
                                     var dlg = new MessageDialog("Transfer error. You may need to close and re-open this app, and likely also reboot your device.");
                                     await dlg.ShowAsync();
                                 }
                                 else
                                 {
+                                    SysExSendProgressBar.Value = (double)_fileSizeInBytes;
+                                    ProgressBytes.Text = string.Format("{0:N0}", _fileSizeInBytes);
+                                    PercentComplete.Text = "100%";
+                                    TransferOperationInProgress.Text = "Completed";
+
                                     // save the user-entered settings, since they worked
                                     Settings.TransferBufferSize = transferBufferSize;
                                     Settings.TransferDelayBetweenBuffers = transferDelayBetweenBuffers;
@@ -248,6 +255,8 @@ namespace PeteBrown.MidiSysexUtility
                                     // update user stats (for local use and display)
                                     Statistics.TotalFilesTransferred += 1;
                                     Statistics.TotalBytesTransferred += _fileSizeInBytes;
+
+                                    Analytics.LogEvent(AnalyticsEvent.TransferSuccess);
 
                                     NotificationManager.NotifySuccess(_fileSizeInBytes, _inputFile.Name);
                                 }
@@ -288,10 +297,18 @@ namespace PeteBrown.MidiSysexUtility
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            // Stop any in-process transfer
-            _transferOperation.Cancel();
+            try
+            {
+                // Stop any in-process transfer
+                _transferOperation.Cancel();
 
-            Cancel.IsEnabled = false;
+                Cancel.IsEnabled = false;
+            }
+            catch
+            {
+                // don't bomb out on a cancel op
+                Analytics.LogEvent(AnalyticsEvent.TransferCancelError);
+            }
         }
 
 
@@ -306,6 +323,10 @@ namespace PeteBrown.MidiSysexUtility
                 _outputPortDeviceInformation = (DeviceInformation)MidiOutputPortList.SelectedItem;
 
                 ProgressPanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                // no items added to selection
             }
         }
 
