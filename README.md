@@ -11,3 +11,5 @@ Screen shot of the app transferring an operating system upgrade for the Elektron
 
 ![Dark Mode Screen shot](/images/sysex1-2-dark.png)
 
+Prefer to run a pre-built version of this app? It's in the store here:
+https://www.microsoft.com/store/productId/9PFD4DDWGKTN
