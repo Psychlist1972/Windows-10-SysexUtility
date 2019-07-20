@@ -6,11 +6,11 @@ Uses my Windows 10 MIDI library, which supports all Windows 10 MIDI features, in
 
 Screen shots of the app transferring an operating system upgrade for the Elektron Digitone over BLE MIDI. 
 
-![Screen shot](/images/sysex 1.png)
+![Screen shot](/images/sysex1.png)
 
-![Screen shot](/images/sysex 2.png)
+![Screen shot](/images/sysex2.png)
 
-![Dark Mode Screen shot](/images/sysex 3.png)
+![Dark Mode Screen shot](/images/sysex3.png)
 
 Prefer to run a pre-built version of this app? It's in the store here:
 https://www.microsoft.com/store/productId/9PFD4DDWGKTN
