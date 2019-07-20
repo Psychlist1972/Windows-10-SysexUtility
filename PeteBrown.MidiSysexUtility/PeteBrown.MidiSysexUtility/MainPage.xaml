@@ -5,6 +5,7 @@
     xmlns:local="using:PeteBrown.MidiSysexUtility"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -23,55 +24,113 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <TextBlock Text="Pick the MIDI interface to send to, and then the file to send. Hit 'Send SysEx' when ready. The buffer size and transfer delay help control transfer speed for slower or older devices which run into buffer overruns or other problems at full speed. A buffer size of 256 and delay of 0 works well for fast USB-connected devices like Elektron gear. The F0 delay is for devices that need some time to get ready for the SysEx data after being notified that SysEx is coming." 
-                           TextWrapping="WrapWholeWords"
-                           Margin="4,4,4,40" />
-            </Grid>
-            
-            <!-- MIDI Port -->
-            <Grid Grid.Row="1">
-                <ComboBox x:Name="MidiOutputPortList" SelectionChanged="MidiOutputPortList_SelectionChanged" Header="MIDI Output Port" IsEnabled="False"
-                          Margin="4"
-                          Width="400">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" Margin="4" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </Grid>
-
-            <!-- File Name to send -->
-            <Grid Grid.Row="2" Margin="0,20,0,20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" x:Name="PickInputFile" Content="Pick SysEx File to Send" Click="PickInputFile_Click" IsEnabled="False" Margin="4"/>
-                <TextBlock x:Name="InputFileName" Grid.Column="1" Text="" Margin="4" VerticalAlignment="Center"/>
-            </Grid>
-
-
-            <!-- TODO: add in an optional delay after the first F0 byte -->
-            <!-- wrap these all into two sections: fastest, and configurable -->
-            <!-- consider also displaying the sysex as it is dumped -->
-            <!-- For UI layout options, check the toolkit -->
-            
-            <!-- delay between sends -->
-            <Grid Grid.Row="3">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <TextBox x:Name="EnteredBufferSize" Header="Transfer Buffer Size (bytes)" Width="240" Grid.Row="0" 
-                         HorizontalAlignment="Left" Margin="4" />
-                <TextBox x:Name="EnteredTransferDelay" Header="Transfer Delay (milliseconds)" Width="240" Grid.Row="1" 
-                         HorizontalAlignment="Left" Margin="4" />
-                <TextBox x:Name="EnteredF0Delay" Header="Delay after initial F0" Width="240" Grid.Row="2" 
-                         HorizontalAlignment="Left" Margin="4" />
+                <TextBlock Grid.Row="0" Text="When transferring over BLE MIDI, I recommend using the Yamaha M-BT01, or the QUICCO Sound mi.1 interface. Others like the BM-A01 may pair, but do not transfer sysex messages properly. This is true on both Windows and iOS from my testing." 
+                           TextWrapping="WrapWholeWords"
+                           Margin="4,4,4,40" />
             </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Left side -->
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    
+                    <!-- MIDI Port -->
+                    <Grid Grid.Row="0">
+                        <ComboBox x:Name="MidiOutputPortList" SelectionChanged="MidiOutputPortList_SelectionChanged" Header="MIDI Output Port" IsEnabled="False"
+                          Margin="4"
+                          Width="400">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" Margin="4" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+
+                            <ComboBox.Resources>
+                                <winui:TeachingTip x:Name="Tip_MidiOutputPort"
+                                                   IsLightDismissEnabled="False"
+                                                   Target="{x:Bind MidiOutputPortList}"
+                                                   Title="Pick your MIDI output port"
+                                                   Subtitle="First, pick the MIDI output port you want to use. This can be any type of port, including BLE MIDI, supported by this version of Windows.">
+                                </winui:TeachingTip>
+                            </ComboBox.Resources>
+                        </ComboBox>
+                    </Grid>
+
+                    <!-- File Name to send -->
+                    <Grid Grid.Row="1" Margin="0,20,0,20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0" x:Name="PickInputFile" Content="Pick SysEx File to Send" Click="PickInputFile_Click" IsEnabled="False" Margin="4">
+                            <Button.Resources>
+                                <winui:TeachingTip x:Name="Tip_PickInputFile"
+                                                   IsLightDismissEnabled="False"
+                                                   Target="{x:Bind PickInputFile}"
+                                                   Title="Pick the SysEx file to send"
+                                                   Subtitle="Pick the SysEx file to send. This must be a well-formed binary SysEx file. ASCII SysEx files are not supported.">
+                                </winui:TeachingTip>
+                            </Button.Resources>
+
+                        </Button>
+                        <TextBlock x:Name="InputFileName" Grid.Row="1" Text="" Margin="4" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    
+                    
+                    <!-- delay between sends -->
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBox x:Name="EnteredTransferDelay" Header="Transfer Delay (milliseconds)" Width="240" Grid.Row="0" 
+                         HorizontalAlignment="Left" Margin="4" />
+                    </Grid>
+                </Grid>
+
+                <!-- Right side -->
+                <Grid Grid.Column="1" HorizontalAlignment="Right" x:Name="FileInformationPanel" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="SysEx File Information" Margin="4"/>
+                    <TextBox x:Name="CalculatedBufferSize" Header="Calculated Buffer Size (bytes)" Width="240" Grid.Row="1" 
+                        HorizontalAlignment="Left" Margin="4" IsTabStop="False" IsReadOnly="True" IsEnabled="True" BorderThickness="0" />
+                    <TextBox x:Name="CalculatedSysExMessageCount" Header="SysEx Message Count (messages)" Width="240" Grid.Row="2" 
+                        HorizontalAlignment="Left" Margin="4" IsTabStop="False" IsReadOnly="True" IsEnabled="True" BorderThickness="0" />
+                    <TextBox x:Name="CalculatedFileSize" Header="File Size (bytes)" Width="240" Grid.Row="3" 
+                        HorizontalAlignment="Left" Margin="4" IsTabStop="False" IsReadOnly="True" IsEnabled="True" BorderThickness="0" />
+                </Grid>
+                
+            </Grid>
+            
+            
+
+            
+            
+            
 
             <Grid Grid.Row="4" Margin="0,20,0,20">
                 <Grid.ColumnDefinitions>
@@ -79,7 +138,17 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" x:Name="SendSysExFile" Content="Send SysEx" Click="SendSysExFile_Click" IsEnabled="False" Margin="4" />
+                <Button Grid.Column="0" x:Name="SendSysExFile" Content="Validate and Send SysEx" Click="SendSysExFile_Click" IsEnabled="False" Margin="4">
+                    <Button.Resources>
+                        <winui:TeachingTip x:Name="Tip_SendSysExFile"
+                                                   IsLightDismissEnabled="False"
+                                                   Target="{x:Bind SendSysExFile}"
+                                                   Title="Validate and send the file"
+                                                   Subtitle="Optionally, set the transfer delay between messages (important for older/slower devices). Then, put your device in receive mode, and once ready, click this button to validate and send the SysEx data.">
+                        </winui:TeachingTip>
+                    </Button.Resources>
+                </Button>
+                        
                
 
             </Grid>

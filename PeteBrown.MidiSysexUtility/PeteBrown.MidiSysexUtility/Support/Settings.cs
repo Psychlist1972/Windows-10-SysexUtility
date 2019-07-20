@@ -11,8 +11,10 @@ namespace PeteBrown.MidiSysexUtility
     class Settings : SettingsBase
     {
         private const string TransferDelayBetweenBuffers_key = "TransferDelayBetweenBuffers";
-        private const string TransferBufferSize_key = "TransferBufferSize";
-        private const string F0Delay_key = "F0Delay";
+
+        private const string TipMidiOutputPortShown_key = "TipMidiOutputPortShown";
+        private const string TipPickInputFileShown_key = "TipPickInputFileShown";
+        private const string TipSendSysExFileShown_key = "TipSendSysExFileShown";
 
 
         public static uint TransferDelayBetweenBuffers
@@ -21,19 +23,22 @@ namespace PeteBrown.MidiSysexUtility
             set { WriteValue<uint>(TransferDelayBetweenBuffers_key, value); }
         }
 
-        public static uint TransferBufferSize
+        public static bool TipMidiOutputPortShown
         {
-            get { return GetValueOrDefault<uint>(TransferBufferSize_key, MidiSysExSender.DefaultBufferSize); }
-            set { WriteValue<uint>(TransferBufferSize_key, value); }
+            get { return GetValueOrDefault<bool>(TipMidiOutputPortShown_key, false); }
+            set { WriteValue<bool>(TipMidiOutputPortShown_key, value); }
         }
 
-        public static uint F0Delay
+        public static bool TipPickInputFileShown
         {
-            get { return GetValueOrDefault<uint>(F0Delay_key, MidiSysExSender.DefaultF0Delay); }
-            set { WriteValue<uint>(F0Delay_key, value); }
+            get { return GetValueOrDefault<bool>(TipPickInputFileShown_key, false); }
+            set { WriteValue<bool>(TipPickInputFileShown_key, value); }
         }
 
-
-
+        public static bool TipSendSysExFileShown
+        {
+            get { return GetValueOrDefault<bool>(TipSendSysExFileShown_key, false); }
+            set { WriteValue<bool>(TipSendSysExFileShown_key, value); }
+        }
     }
 }

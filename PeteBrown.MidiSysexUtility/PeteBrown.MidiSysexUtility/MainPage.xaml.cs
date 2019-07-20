@@ -14,6 +14,7 @@ using Windows.Storage.Streams;
 using Windows.UI.Core;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -46,7 +47,6 @@ namespace PeteBrown.MidiSysexUtility
 
             _watcher = new Devices.Midi.MidiDeviceWatcher();
 
-
             ProgressPanel.Visibility = Visibility.Collapsed;
 
             Loaded += MainPage_Loaded;
@@ -57,9 +57,7 @@ namespace PeteBrown.MidiSysexUtility
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            EnteredBufferSize.Text = Settings.TransferBufferSize.ToString();
             EnteredTransferDelay.Text = Settings.TransferDelayBetweenBuffers.ToString();
-            EnteredF0Delay.Text = Settings.F0Delay.ToString();
 
 
             _watcher.OutputPortsEnumerated += _watcher_OutputPortsEnumerated;
@@ -77,8 +75,15 @@ namespace PeteBrown.MidiSysexUtility
                     if (_watcher.OutputPortDescriptors.Count() > 0)
                     {
                         MidiOutputPortList.IsEnabled = true;
-
                         MidiOutputPortList.ItemsSource = _watcher.OutputPortDescriptors;
+
+                        // Show tip to pick the MIDI file 
+                        if (!Settings.TipMidiOutputPortShown)
+                        {
+                            CloseAllTips();
+                            Tip_MidiOutputPort.IsOpen = true;
+                            Settings.TipMidiOutputPortShown = true;
+                        }
                     }
                     else
                     {
@@ -86,8 +91,6 @@ namespace PeteBrown.MidiSysexUtility
                         await dlg.ShowAsync();
                     }
                 });
-      
-
         }
 
 
@@ -97,6 +100,9 @@ namespace PeteBrown.MidiSysexUtility
         {
             _inputFile = null;
             InputFileName.Text = "";
+            CalculatedSysExMessageCount.Text = "";
+            CalculatedBufferSize.Text = "";
+
 
             var picker = new FileOpenPicker();
 
@@ -109,7 +115,6 @@ namespace PeteBrown.MidiSysexUtility
 
             if (file != null)
             {
-
                 _inputFile = file;
 
                 SendSysExFile.IsEnabled = true;
@@ -119,7 +124,7 @@ namespace PeteBrown.MidiSysexUtility
                 // update size info
                 _fileSizeInBytes = basicProperties.Size;
 
-                TotalBytes.Text = string.Format("{0:N0} bytes",_fileSizeInBytes);
+                TotalBytes.Text = string.Format("{0:n0} bytes",_fileSizeInBytes);
 
                 SysExSendProgressBar.Minimum = 0;
                 SysExSendProgressBar.Maximum = (double)_fileSizeInBytes;
@@ -131,6 +136,16 @@ namespace PeteBrown.MidiSysexUtility
                 ProgressPanel.Visibility = Visibility.Collapsed;
 
                 TransferOperationInProgress.Text = "Initializing...";
+
+
+                // Show tip to start the tranfer 
+                if (!Settings.TipSendSysExFileShown)
+                {
+                    CloseAllTips();
+                    Tip_SendSysExFile.IsOpen = true;
+                    Settings.TipSendSysExFileShown = true;
+                }
+
 
             }
             else
@@ -145,15 +160,10 @@ namespace PeteBrown.MidiSysexUtility
 
         private async void SendSysExFile_Click(object sender, RoutedEventArgs e)
         {
-            // validate the user-entered parameters
+            CloseAllTips();
 
-            uint transferBufferSize = 0;
-            if ((!uint.TryParse(EnteredBufferSize.Text, out transferBufferSize)) || transferBufferSize <= 0)
-            {
-                var dlg = new MessageDialog("For the buffer size, please enter a whole number > 0. This is the size of the message sent over MIDI.");
-                await dlg.ShowAsync();
-                return;
-            }
+
+            // validate the user-entered parameters
 
             uint transferDelayBetweenBuffers = 0;
             if ((!uint.TryParse(EnteredTransferDelay.Text, out transferDelayBetweenBuffers)) || transferDelayBetweenBuffers < 0)
@@ -162,16 +172,6 @@ namespace PeteBrown.MidiSysexUtility
                 await dlg.ShowAsync();
                 return;
             }
-
-            uint f0Delay = 0;
-            if ((!uint.TryParse(EnteredF0Delay.Text, out f0Delay)) || f0Delay < 0)
-            {
-                var dlg = new MessageDialog("For the F0 delay, please enter a positive whole number. This is the delay after the initial byte is sent to the device, starting the SysEx conversation.");
-                await dlg.ShowAsync();
-                return;
-            }
-
-
 
             // validate, open the port, and then send the file
             if (_inputFile != null)
@@ -188,8 +188,31 @@ namespace PeteBrown.MidiSysexUtility
 
                         if (stream != null && stream.CanRead)
                         {
+                            // validate the file
+
+                            var validationStatus = await MidiSysExSender.MeasureAndValidateSysExFile(stream);
+
+                            if (validationStatus.Status != MidiSysExSender.MidiSysExFileValidationStatus.OK)
+                            {
+                                // TODO: log failure
+
+                                var dlg = new MessageDialog(validationStatus.GetStatusDescription());
+                                dlg.Title = "Invalid SysEx file";
+                                await dlg.ShowAsync();
+
+                                return;
+                            }
+
+                            // Show statistics from the file
+                            FileInformationPanel.Visibility = Visibility.Visible;
+                            CalculatedBufferSize.Text = string.Format("{0:n0}", validationStatus.BufferSize);
+                            CalculatedSysExMessageCount.Text = string.Format("{0:n0}", validationStatus.MessageCount);
+                            CalculatedFileSize.Text = string.Format("{0:n0}", validationStatus.FileSize);
+
+
                             // send the bytes
-                            _transferOperation = MidiSysExSender.SendSysExStreamAsyncWithProgress(stream, outputPort, transferBufferSize, transferDelayBetweenBuffers);
+                            _transferOperation = MidiSysExSender.SendSysExStreamAsyncWithProgress(
+                                stream, outputPort, validationStatus.BufferSize, transferDelayBetweenBuffers);
 
                             // show progress of the operation. This is updated async
                             ProgressPanel.Visibility = Visibility.Visible;
@@ -200,7 +223,7 @@ namespace PeteBrown.MidiSysexUtility
                             _transferOperation.Progress = (result, progress) => 
                             {
                                 SysExSendProgressBar.Value = (double)progress.BytesRead;
-                                ProgressBytes.Text = string.Format("{0:N0}", progress.BytesRead);
+                                ProgressBytes.Text = string.Format("{0:n0}", progress.BytesRead);
                                 PercentComplete.Text = Math.Round(((double)progress.BytesRead / _fileSizeInBytes) * 100, 0) + "%";
 
                                 TransferOperationInProgress.Text = MidiSysExSender.GetStageDescription(progress.Stage);
@@ -248,9 +271,9 @@ namespace PeteBrown.MidiSysexUtility
                                     TransferOperationInProgress.Text = "Completed";
 
                                     // save the user-entered settings, since they worked
-                                    Settings.TransferBufferSize = transferBufferSize;
+                                    //Settings.TransferBufferSize = transferBufferSize;
                                     Settings.TransferDelayBetweenBuffers = transferDelayBetweenBuffers;
-                                    Settings.F0Delay = f0Delay;
+                                    //Settings.F0Delay = f0Delay;
 
                                     // update user stats (for local use and display)
                                     Statistics.TotalFilesTransferred += 1;
@@ -266,6 +289,8 @@ namespace PeteBrown.MidiSysexUtility
                         }
                         else
                         {
+                            // TODO: log failure
+
                             // stream is null or CanRead is false
                             var dlg = new MessageDialog("Could not open file '" + _inputFile.Name + "' for reading.");
                             await dlg.ShowAsync();
@@ -273,6 +298,8 @@ namespace PeteBrown.MidiSysexUtility
                     }
                     else
                     {
+                        // TODO: log failure
+
                         // outputPort is null
                         var dlg = new MessageDialog("Could not open MIDI output port '" + _outputPortDeviceInformation.Name + "'");
                         await dlg.ShowAsync();
@@ -280,6 +307,8 @@ namespace PeteBrown.MidiSysexUtility
                 }
                 else
                 {
+                    // TODO: log failure
+
                     // _outputPortDeviceInformation is null
                     var dlg = new MessageDialog("No MIDI output port selected'");
                     await dlg.ShowAsync();
@@ -287,6 +316,8 @@ namespace PeteBrown.MidiSysexUtility
             }
             else
             {
+                // TODO: log failure
+
                 // _inputFile is null
                 var dlg = new MessageDialog("No SysEx input file selected'");
                 await dlg.ShowAsync();
@@ -323,6 +354,17 @@ namespace PeteBrown.MidiSysexUtility
                 _outputPortDeviceInformation = (DeviceInformation)MidiOutputPortList.SelectedItem;
 
                 ProgressPanel.Visibility = Visibility.Collapsed;
+
+
+                // Show tip to pick the MIDI file 
+                if (!Settings.TipPickInputFileShown)
+                {
+                    CloseAllTips();
+
+                    Tip_PickInputFile.IsOpen = true;
+                    Settings.TipPickInputFileShown = true;
+                }
+
             }
             else
             {
@@ -332,7 +374,12 @@ namespace PeteBrown.MidiSysexUtility
 
 
 
-
+        private void CloseAllTips()
+        {
+            Tip_MidiOutputPort.IsOpen = false;
+            Tip_PickInputFile.IsOpen = false;
+            Tip_SendSysExFile.IsOpen = false;
+        }
 
 
     }
