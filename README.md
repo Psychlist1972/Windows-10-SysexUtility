@@ -14,3 +14,7 @@ Screen shots of the app transferring an operating system upgrade for the Elektro
 
 Prefer to run a pre-built version of this app? It's in the store here:
 https://www.microsoft.com/store/productId/9PFD4DDWGKTN
+
+# MIDI Port Names
+Don't like the Windows 10 / WinRT MIDI Port names? Check out this (unofficial, unsupported) PowerShell script that lets you rename them to anything you want:
+https://gist.github.com/Psychlist1972/ec5c52c9e4999710191d4bb07e82f98a
